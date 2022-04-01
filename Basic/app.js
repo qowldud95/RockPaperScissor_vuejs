@@ -7,6 +7,8 @@ new Vue({
         winner: null,
         lifeOfMe:3,
         lifeOfCom:3,
+        isSelectable: true,
+        logs:[],
     },
     watch: {
         count: function(newVal){
@@ -19,28 +21,34 @@ new Vue({
                 } else {
                     this.comChoice = 'paper';
                 }
-            }
+                //가위바위보 승패 결정
+                if(this.myChoice === this.comChoice) this.winner='no one';
+                else if(this.myChoice === 'rock' & this.comChoice === 'scissor') this.winner='me';
+                else if(this.myChoice === 'scissor' & this.comChoice === 'paper') this.winner='me';
+                else if(this.myChoice === 'paper' & this.comChoice === 'rock') this.winner='me';
+                else if(this.myChoice === 'rock' & this.comChoice === 'paper') this.winner='com';
+                else if(this.myChoice === 'scissor' & this.comChoice === 'rock') this.winner='com';
+                else if(this.myChoice === 'paper' & this.comChoice === 'scissor') this.winner='com';
 
-            //가위바위보 승패 결정
-            if(this.myChoice === this.comChoice) this.winner='no one';
-            else if(this.myChoice === 'rock' & this.comChoice === 'scissor') this.winner='me';
-            else if(this.myChoice === 'scissor' & this.comChoice === 'paper') this.winner='me';
-            else if(this.myChoice === 'paper' & this.comChoice === 'rock') this.winner='me';
-            else if(this.myChoice === 'rock' & this.comChoice === 'paper') this.winner='com';
-            else if(this.myChoice === 'scissor' & this.comChoice === 'rock') this.winner='com';
-            else if(this.myChoice === 'paper' & this.comChoice === 'scissor') this.winner='com';
-            
-            //몫 차감
-            if (this.winner === 'me') {
-                this.lifeOfCom--;
-            } else if (this.winner === 'com') {
-                this.lifeOfMe--;
-            }
+                //몫 차감
+                if (this.winner === 'me') {
+                    this.lifeOfCom--;
+                } else if (this.winner === 'com') {
+                    this.lifeOfMe--;
+                }
 
+
+                this.count = 3;
+                this.isSelectable = true;
+
+                let log = `You: ${this.myChoice}, Computer: ${this.comChoice}`;
+                this.logs.push(log) 
+            }
         }
     },
     methods: {
         startGame: function(){
+            this.isSelectable = false;
             if(this.myChoice == null){
                 alert('가위 바위 보 중 하나를 선택해주세요.');
             } else {
