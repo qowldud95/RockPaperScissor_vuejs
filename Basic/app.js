@@ -41,9 +41,18 @@ new Vue({
                 this.count = 3;
                 this.isSelectable = true;
 
-                let log = `You: ${this.myChoice}, Computer: ${this.comChoice}`;
-                this.logs.push(log) 
+                let log = {
+                    message: `You: ${this.myChoice}, Computer: ${this.comChoice}`,
+                    winner: this.winner
+                } ;
+                this.logs.unshift(log);
             }
+        },
+        lifeOfYou: function(){
+
+        },
+        lifeOfMe: function(){
+            
         }
     },
     methods: {
